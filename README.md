@@ -51,9 +51,10 @@ Detta projekt är utfört med Visual Studio Code. För att genomföra projektet 
      git push -u origin main
      ```
 
-8. **Lägg till GitHub Actions Workflow**
-   - Lägg till en GitHub Actions workflow för .NET:
-     - Lägg in skriptet från `workflow.yaml` och spara det i `.github/workflows/`-mappen.
+8. **Skapa en GitHub Actions Workflow för .NET**
+   - Skapa en GitHub Actions workflow för .NET:
+     - Lägg till en ny workflow genom att skapa en fil med namnet `workflow.yaml` i `.github/workflows/`-mappen.
+     - Använd koden som finns i `workflow.yaml` för att definiera din workflow.
 
 9. **Synkronisera Lokala Filer med GitHub**
    - Kör `git pull` för att synkronisera lokala filer med GitHub:
@@ -63,37 +64,46 @@ Detta projekt är utfört med Visual Studio Code. För att genomföra projektet 
 
 # Steg för att Provisionera och Konfigurera VM
 
-1. **Kör Provisioneringsskript**
-   - Kör `VM_provision.sh` för att provisionera virtuella maskiner.
+1. **Navigera till Katalog med Skript**
+   - Gå till katalogen som innehåller provisioneringsskripten:
+     ```bash
+     cd /path/to/Provision_scripts
+     ```
 
-2. **Starta SSH-agent**
+2. **Kör Provisioneringsskript**
+   - Kör `VM_provision.sh` för att provisionera virtuella maskiner:
+     ```bash
+     ./VM_provision.sh
+     ```
+
+3. **Starta SSH-agent**
    - Starta SSH-agent:
      ```bash
      eval $(ssh-agent)
      ```
 
-3. **Lägg till SSH-nyckel**
+4. **Lägg till SSH-nyckel**
    - Lägg till din SSH-nyckel:
      ```bash
      ssh-add /path/to/key
      ```
 
-4. **Anslut till Bastion Host**
+5. **Anslut till Bastion Host**
    - SSH in till bastion:
      ```bash
      ssh -A username@bastion-ip-address
      ```
 
-5. **Anslut till Web Server**
+6. **Anslut till Web Server**
    - SSH in till web server med IP `10.0.0.100`:
      ```bash
      ssh username@10.0.0.100
      ```
 
-6. **Skapa GitHub Actions Runner för Linux**
+7. **Skapa GitHub Actions Runner för Linux**
    - Skapa en ny GitHub Actions runner för Linux på GitHub och följ kommandona som ges på webappen.
 
-7. **Installera och Starta Runner som Tjänst**
+8. **Installera och Starta Runner som Tjänst**
    - Installera runner som en systemtjänst:
      ```bash
      sudo ./svc.sh install username
