@@ -1,11 +1,7 @@
 # Steg för att Skapa och Konfigurera Projekt
 
 1. **Skapa Projektmapp**
-   - Skapa en ny mapp med namnet `Uppgift_2` för att lagra filerna:
-     ```bash
-     mkdir Uppgift_2
-     cd Uppgift_2
-     ```
+   - Skapa en ny mapp med namnet `Uppgift_2` för att lagra filerna.
 
 2. **Skapa Enkel .NET-applikation**
    - Skapa en ny .NET webbapplikation:
