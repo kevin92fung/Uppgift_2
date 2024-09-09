@@ -4,14 +4,8 @@ Detta projekt är utfört med Visual Studio Code. För att genomföra projektet 
 # Steg för att Skapa och Konfigurera Projekt
 
 1. **Skapa Projektmapp och Öppna i Visual Studio Code**
-   - Skapa en ny mapp med namnet `Uppgift_2`:
-     ```bash
-     mkdir Uppgift_2
-     ```
-   - Starta Visual Studio Code och öppna den nyss skapade mappen `Uppgift_2`:
-     ```bash
-     code Uppgift_2
-     ```
+   - Skapa en ny mapp med namnet `Uppgift_2`
+   - Starta Visual Studio Code och öppna den nyss skapade mappen `Uppgift_2`
 
 2. **Skapa Enkel .NET-applikation**
    - Skapa en ny .NET webbapplikation:
