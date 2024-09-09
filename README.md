@@ -1,7 +1,17 @@
+# Information
+Detta projekt är utfört med Visual Studio Code. För att genomföra projektet krävs ett aktivt Azure-konto. Följ stegen nedan för att skapa, konfigurera och provisionera ditt .NET-projekt samt sätta upp Git och GitHub Actions.
+
 # Steg för att Skapa och Konfigurera Projekt
 
-1. **Skapa Projektmapp**
-   - Skapa en ny mapp med namnet `Uppgift_2` för att lagra filerna.
+1. **Skapa Projektmapp och Öppna i Visual Studio Code**
+   - Skapa en ny mapp med namnet `Uppgift_2`:
+     ```bash
+     mkdir Uppgift_2
+     ```
+   - Starta Visual Studio Code och öppna den nyss skapade mappen `Uppgift_2`:
+     ```bash
+     code Uppgift_2
+     ```
 
 2. **Skapa Enkel .NET-applikation**
    - Skapa en ny .NET webbapplikation:
@@ -54,7 +64,7 @@
 # Steg för att Provisionera och Konfigurera VM
 
 1. **Kör Provisioneringsskript**
-   - Kör `VM_provision.sh` för att provisionera alla resurser.
+   - Kör `VM_provision.sh` för att provisionera virtuella maskiner.
 
 2. **Starta SSH-agent**
    - Starta SSH-agent:
