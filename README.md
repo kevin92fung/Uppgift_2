@@ -2,16 +2,14 @@
 
 Detta projekt är utfört med **Visual Studio Code** och kräver ett aktivt **Azure-konto** samt att **.NET SDK** är installerat för att kunna skapa och köra en enkel webapplikation.
 
-Projektet syftar till att bygga en säker infrastruktur för en **.NET-webbapplikation**, där webbservern skyddas bakom två andra servrar. 
+Projektet syftar till att bygga en säker infrastruktur för en **.NET-webbapplikation**, där webbservern skyddas bakom två andra servrar. Infrastrukturen provisioneras med en **ARM-template** som skapar tre virtuella maskiner och de nödvändiga nätverksresurserna. Vid provisioneringen konfigureras de virtuella maskinerna med nödvändiga installationer och inställningar genom **custom data**, där **cloud-init-skript** används för att automatisera installationen och konfigurationen.
 
-Infrastrukturen provisioneras med en **ARM-template**, som skapar tre virtuella maskiner och de nödvändiga nätverksresurserna. Vid provisioneringen konfigureras de virtuella maskinerna med nödvändiga installationer och inställningar genom **custom data**, där **cloud-init-skript** används för att automatisera installationen och konfigurationen.
-
-
+---
 
 # Steg för att Skapa och Konfigurera Projekt
 
 1. **Skapa Projektmapp och Öppna i Visual Studio Code**
-   - Skapa en ny mapp med namnet `Uppgift_2` och öppna den i Visual Studio Code
+   - Skapa en ny mapp med namnet `Uppgift_2` och öppna den i Visual Studio Code.
 
 2. **Skapa Enkel .NET-applikation**
    - Skapa en ny .NET webbapplikation:
@@ -28,7 +26,7 @@ Infrastrukturen provisioneras med en **ARM-template**, som skapar tre virtuella 
      *En `.gitignore`-fil hjälper till att undvika att onödiga filer läggs till i Git-repot.*
 
 4. **Ladda Ner Skript och Mallar**
-   - Ladda ner skript och mallar från katalogen `Provision_scripts`.
+   - Ladda ner skript och mallar från katalogen `Provision_scripts`. Placera katalogen i huvudmappen för projektet, till exempel `Uppgift_2/Provision_scripts`.
 
 5. **Initiera Git**
    - Initiera ett nytt Git-repo:
@@ -58,6 +56,8 @@ Infrastrukturen provisioneras med en **ARM-template**, som skapar tre virtuella 
      ```
      *Synkroniserar lokala filer med den senaste versionen från GitHub.*
 
+---
+
 # Steg för att Provisionera och Konfigurera VM
 
 1. **Navigera till Katalog med Skript**
@@ -65,6 +65,7 @@ Infrastrukturen provisioneras med en **ARM-template**, som skapar tre virtuella 
      ```bash
      cd /path/to/Provision_scripts
      ```
+     *Se till att katalogen `Provision_scripts` ligger i rätt sökväg innan du kör detta kommando.*
 
 2. **Kör Provisioneringsskript**
    - Kör skriptet för att provisionera virtuella maskiner:
@@ -94,7 +95,6 @@ Infrastrukturen provisioneras med en **ARM-template**, som skapar tre virtuella 
      ```
      *Ansluter till bastion-servern som är skyddad bakom en brandvägg. Flaggan `-A` (agent forwarding) vidarebefordrar dina lokala SSH-nycklar från SSH-agenten till bastion-servern. Detta gör att du kan använda dina nycklar för att autentisera mot andra servrar från bastion-servern utan att behöva kopiera nycklarna dit.*
 
-
 6. **Anslut till Web Server**
    - SSH in till webbservern:
      ```bash
@@ -102,11 +102,12 @@ Infrastrukturen provisioneras med en **ARM-template**, som skapar tre virtuella 
      ```
      *Ansluter till webbservern via bastion-servern.*
 
-7. **Skapa GitHub Actions Runner för Linux**
-   - Skapa en GitHub Actions runner på webbservern och följ instruktionerna nedan.
+---
 
-   **Hämta och Installera Runner**
-   
+# Skapa GitHub Actions Runner för Linux
+
+7. **Hämta och Installera Runner**
+
    1. **Skapa en mapp för runner**
       ```bash
       mkdir actions-runner && cd actions-runner
@@ -127,19 +128,22 @@ Infrastrukturen provisioneras med en **ARM-template**, som skapar tre virtuella 
       tar xzf ./actions-runner-linux-x64-2.319.1.tar.gz
       ```
 
-   **Konfigurera och Starta Runner**
+---
+
+8. **Konfigurera och Starta Runner**
 
    5. **Skapa och konfigurera runner**
       ```bash
       ./config.sh --url https://github.com/yourusername/yourrepository --token xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       ```
-      *Byt ut `https://github.com/yourusername/yourrepository` mot URL:en till din GitHub-repository och ersätt `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx` med din personliga runner-token.*
+      *Byt ut `https://github.com/yourusername/yourrepository` mot URL:en till din GitHub-repository och ersätt `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx` med din personliga runner-token (Observera att token är tidsbegränsad, så använd den direkt efter generering).*
 
+---
 
-8. **Installera och Starta Runner som Tjänst**
+9. **Installera och Starta Runner som Tjänst**
    - Installera och starta runnern som en tjänst för att säkerställa att den körs automatiskt:
      ```bash
      sudo ./svc.sh install username
      sudo ./svc.sh start
      ```
-     *Detta installerar och startar runnern som en systemtjänst på webbservern så att den automatiskt startar om vid systemåterstart.*
+     *Detta installerar och startar runnern som en systemtjänst på webbservern, så att den automatiskt startar om vid systemåterstart och alltid finns tillgänglig för GitHub Actions.*
