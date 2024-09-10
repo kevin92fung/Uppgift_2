@@ -1,6 +1,11 @@
 # Information
 
-Detta projekt är utfört med **Visual Studio Code** och kräver ett aktivt **Azure-konto** samt att **.NET SDK** är installerat för att kunna skapa och köra en enkel webapplikation. Projektet syftar till att bygga en säker infrastruktur för en **.NET-webbapplikation**, där webbservern skyddas bakom två andra servrar. Infrastrukturen provisioneras med en **ARM-template**, som skapar tre virtuella maskiner och de nödvändiga nätverksresurserna. Vid provisioneringen konfigureras de virtuella maskinerna med nödvändiga installationer och inställningar genom **custom data**, där **cloud-init-skript** används för att automatisera installationen och konfigurationen.
+Detta projekt är utfört med **Visual Studio Code** och kräver ett aktivt **Azure-konto** samt att **.NET SDK** är installerat för att kunna skapa och köra en enkel webapplikation.
+
+Projektet syftar till att bygga en säker infrastruktur för en **.NET-webbapplikation**, där webbservern skyddas bakom två andra servrar. 
+
+Infrastrukturen provisioneras med en **ARM-template**, som skapar tre virtuella maskiner och de nödvändiga nätverksresurserna. Vid provisioneringen konfigureras de virtuella maskinerna med nödvändiga installationer och inställningar genom **custom data**, där **cloud-init-skript** används för att automatisera installationen och konfigurationen.
+
 
 
 # Steg för att Skapa och Konfigurera Projekt
@@ -87,7 +92,8 @@ Detta projekt är utfört med **Visual Studio Code** och kräver ett aktivt **Az
      ```bash
      ssh -A username@bastion-ip-address
      ```
-     *Ansluter till bastion-servern som är skyddad bakom en brandvägg.*
+     *Ansluter till bastion-servern som är skyddad bakom en brandvägg. Flaggan `-A` (agent forwarding) vidarebefordrar dina lokala SSH-nycklar från SSH-agenten till bastion-servern. Detta gör att du kan använda dina nycklar för att autentisera mot andra servrar från bastion-servern utan att behöva kopiera nycklarna dit.*
+
 
 6. **Anslut till Web Server**
    - SSH in till webbservern:
@@ -97,7 +103,38 @@ Detta projekt är utfört med **Visual Studio Code** och kräver ett aktivt **Az
      *Ansluter till webbservern via bastion-servern.*
 
 7. **Skapa GitHub Actions Runner för Linux**
-   - Skapa en GitHub Actions runner på webbservern och följ de instruktioner som ges på GitHub.
+   - Skapa en GitHub Actions runner på webbservern och följ instruktionerna nedan.
+
+   **Hämta och Installera Runner**
+   
+   1. **Skapa en mapp för runner**
+      ```bash
+      mkdir actions-runner && cd actions-runner
+      ```
+
+   2. **Ladda ner den senaste runner-paketet**
+      ```bash
+      curl -o actions-runner-linux-x64-2.319.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.319.1/actions-runner-linux-x64-2.319.1.tar.gz
+      ```
+
+   3. **Valfritt: Verifiera hash (byt ut hash-värdet vid behov)**
+      ```bash
+      echo "3f6efb7488a183e291fc2c62876e14c9ee732864173734facc85a1bfb1744464  actions-runner-linux-x64-2.319.1.tar.gz" | shasum -a 256 -c
+      ```
+
+   4. **Extrahera installeringspaketet**
+      ```bash
+      tar xzf ./actions-runner-linux-x64-2.319.1.tar.gz
+      ```
+
+   **Konfigurera och Starta Runner**
+
+   5. **Skapa och konfigurera runner**
+      ```bash
+      ./config.sh --url https://github.com/yourusername/yourrepository --token xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      ```
+      *Byt ut `https://github.com/yourusername/yourrepository` mot URL:en till din GitHub-repository och ersätt `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx` med din personliga runner-token.*
+
 
 8. **Installera och Starta Runner som Tjänst**
    - Installera och starta runnern som en tjänst för att säkerställa att den körs automatiskt:
